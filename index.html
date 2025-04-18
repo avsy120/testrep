@@ -6,17 +6,32 @@
   <title>תגובות שירות לקוחות</title>
   <style>
     body { margin:0; padding:0; font-family:Arial,sans-serif; background:#f5f5f5; color:#333; }
-    .container { max-width:900px; margin:0 auto; padding:20px; }
+    .container { max-width:900px; margin:20px auto; padding:0 20px; }
     h1 { text-align:center; margin-bottom:20px; font-size:2em; }
     .search { width:100%; padding:10px; font-size:1em; border:1px solid #ccc; border-radius:4px; }
     .category { margin-top:40px; }
-    .category h2 { margin-bottom:10px; font-size:1.4em; color:#0056b3; border-bottom:2px solid #0056b3; padding-bottom:5px; }
-    .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:20px; }
-    .card { background:#fff; padding:15px; border-radius:6px; box-shadow:0 2px 4px rgba(0,0,0,0.1); position:relative; display:flex; flex-direction:column; }
+    .category h2 {
+      font-size:1.4em; color:#0056b3;
+      border-bottom:2px solid #0056b3; padding-bottom:5px; margin-bottom:15px;
+    }
+    .grid {
+      display:grid;
+      grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+      gap:20px;
+    }
+    .card {
+      background:#fff; padding:15px; border-radius:6px;
+      box-shadow:0 2px 4px rgba(0,0,0,0.1);
+      display:flex; flex-direction:column;
+    }
     .card p { margin:0 0 10px; line-height:1.4; flex:1; }
-    .copy-btn { position:absolute; top:10px; left:10px; background:#0056b3; color:#fff; border:none; padding:6px 10px; border-radius:4px; cursor:pointer; font-size:0.9em; }
+    .copy-btn {
+      background:#0056b3; color:#fff; border:none;
+      padding:6px 10px; border-radius:4px; cursor:pointer;
+      font-size:0.9em; align-self:flex-end; margin-top:auto;
+    }
     .copy-btn.copied { background:#28a745; }
-    @media(max-width:600px){ .grid{grid-template-columns:1fr;} }
+    @media(max-width:600px){ .grid { grid-template-columns:1fr; } }
   </style>
 </head>
 <body>
@@ -28,7 +43,6 @@
   </div>
 
   <script>
-    // ====== כאן לעריכה בעתיד: להוסיף/להסיר תגובות ======
     const categoriesData = {
       "חיובים כפולים": [
         `המערכת מזהה באופן אוטומטי חיובים כפולים או שגויים ופועלת לביטולם. עם זאת, עדכון הנתונים עשוי להימשך מספר ימים.
@@ -80,7 +94,7 @@
       ],
       "צבירת נקודות": [
         `היי, בינואר שינינו את מבנה מועדון הלקוחות, וכעת ישנן דרגות חברות שונות. דרגת החברות הנוכחית שלך היא דרגת "פרש" (Fresh) שבה לא מתבצרת צבירת נקודות. לאחר שתגיעי ל-10 הזמנות בשנה (כרגע יש לך ), תעברי לדרגת חברות גבוהה יותר, בה תוכלי לצבור נקודות באופן קבוע❤️`,
-        `היי , בינואר שינינו את מבנה מועדון הלקוחות, וכעת ישנן דרגות חברות שונות. דרגת החברות הנוכחית שלך היא דרגת "פרש" (Fresh), שבה לא מתבצרת צבירת נקודות. לאחר שתגיע ל-10 הזמנות בשנה (כרגע יש לך  ), תעבור לדרגת חברות גבוהה יותר, בה תוכל לצבור נקודות באופן קבוע❤️`
+        `היי , בינואר שינינו את מבנה מועדון הלקוחות, וכעת ישנן דרגות חברות שונות. דרגת החברות הנוכחית שלך היא דרגת "פרש" (Fresh), שבה לא מתבצרת צבירת נקודות. לאחר שתגיעי ל-10 הזמנות בשנה (כרגע יש לך  ), תעבור לדרגת חברות גבוהה יותר, בה תוכל לצבור נקודות באופן קבוע❤️`
       ]
     };
 
@@ -88,26 +102,26 @@
       const root = document.getElementById('categories');
       root.innerHTML = '';
       for (const [cat, arr] of Object.entries(categoriesData)) {
-        const div = document.createElement('div');
-        div.className = 'category';
-        div.innerHTML = `<h2>${cat}</h2><div class="grid"></div>`;
-        const grid = div.querySelector('.grid');
+        const sec = document.createElement('div');
+        sec.className = 'category';
+        sec.innerHTML = `<h2>${cat}</h2><div class="grid"></div>`;
+        const grid = sec.querySelector('.grid');
         arr.forEach(txt => {
           const card = document.createElement('div');
           card.className = 'card';
-          card.innerHTML = `<p>${txt.replace(/\n/g,'<br/>')}</p>
-            <button class="copy-btn" data-text="${txt.replace(/"/g,'&quot;')}">העתק</button>`;
+          card.innerHTML =
+            `<p>${txt.replace(/\n/g,'<br/>')}</p>
+             <button class="copy-btn" data-text="${txt.replace(/"/g,'&quot;')}">העתק</button>`;
           grid.appendChild(card);
         });
-        root.appendChild(div);
+        root.appendChild(sec);
       }
-      // attach copy handlers
       document.querySelectorAll('.copy-btn').forEach(btn => {
         btn.onclick = () => {
-          const t = btn.getAttribute('data-text');
-          navigator.clipboard.writeText(t);
-          btn.classList.add('copied'); btn.textContent='הועתק';
-          setTimeout(()=>{ btn.classList.remove('copied'); btn.textContent='העתק'; },1000);
+          navigator.clipboard.writeText(btn.dataset.text);
+          btn.classList.add('copied');
+          btn.textContent='הועתק';
+          setTimeout(()=>{ btn.classList.remove('copied'); btn.textContent='העתק'; },800);
         };
       });
     }
@@ -115,12 +129,10 @@
     function filterResponses() {
       const q = document.getElementById('search').value.toLowerCase();
       document.querySelectorAll('.card').forEach(c => {
-        const show = c.querySelector('p').innerText.toLowerCase().includes(q);
-        c.style.display = show ? '' : 'none';
+        c.style.display = c.querySelector('p').innerText.toLowerCase().includes(q) ? '' : 'none';
       });
       document.querySelectorAll('.category').forEach(cat => {
-        const any = cat.querySelector('.card:not([style*="display: none"])');
-        cat.style.display = any ? '' : 'none';
+        cat.style.display = cat.querySelector('.card:not([style*="display: none"])') ? '' : 'none';
       });
     }
 
