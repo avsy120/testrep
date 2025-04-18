@@ -1,6 +1,6 @@
-# Writing the final improved HTML file with full functionality and all responses
+# Generate updated HTML with edit buttons and restore to original position functionality
 
-html_content = """<!DOCTYPE html>
+html_updated = """<!DOCTYPE html>
 <html lang="he" dir="rtl" class="scroll-smooth">
 <head>
   <meta charset="UTF-8">
@@ -109,9 +109,9 @@ html_content = """<!DOCTYPE html>
       אנו מקווים שתמשיך ליהנות מהמוצרים והשירות שלנו בעתיד 🙏`,
       `כמחווה שירותית, אוכל להציע לך 50% הנחה על המשקה הבא. להבא, בכל הנוגע למשקאות יש לפנות ישירות לסניף
       תודה על ההבנה 🙏`,
-      `זו המחווה השירותית שנוכל להציע. במידה והמשקה לא לטעמך, ניתן לפנות לברמן ולבקש תיקון – הם יבצעו זאת בשמחה, אלו נהלי הרשת.
+      `זו המחווה השירותית שנוכל להציע. במידה והמשקה לא לטעמך, ניתן לפנות לברמן ולבקש תיקון – הם יבצעו זאת בשמחה, אלו נהילי הרשת.
       תודה על ההבנה 🙏`,
-      `המשקה שהוכן נזרק, ולכן אין ביכולתנו להציע החזר כספי, מאחר ובוצע שימוש ברכיבים. יחד עם זאת, כמחווה שירותית, אוכל להוסיף לך הטבה של משקה ללא עלות למועדון שלך.
+      `המשקה שהוכן נזרק, ולכן אין ביכולתנו להציע החזר כספי, מאחר ובוצע נפיצום ברכיבים. יחד עם זאת, כמחווה שירותית, אוכל להוסיף לי הטבה של משקה ללא עלות למועדון שלך.
       ואנו מקווים שהחוויה הבאה תהיה טובה יותר ❤️`,
       `מתנצלים על אי הנוחות אך יש לוודא את תקינות המשקה לפני לקיחתו ובמידה ויש משהו שאינו לשביעות רצונך יש להודיע לברמן וישמחו לסייע לך`,
       `אנו מצטערים על החוויה שלך. אשמח אם תוכל לשלוח תמונה של המשקה, על מנת שאוכל להעביר את המקרה לבירור מול הסניף.
@@ -119,7 +119,7 @@ html_content = """<!DOCTYPE html>
       `אנו לא נמצאים בסניפים, ולכן במידה וקיבלת משקה שלא היה לשביעות רצונך מסיבה כלשהי, ישנה אפשרות להחליף או לתקן אותו במקום. לצערנו, אין לנו אפשרות להתחקות אחר המשקה שקיבלת.
       תודה על ההבנה 🙏`,
       `במידה ורכשת בסניף, חשוב לוודא שהמשקה לשביעות רצונך. לצערנו, אין לנו אפשרות להתחקות אחר מה שקיבלת, ולכן זה באחריות הסניף בלבד. אנו תמיד ממליצים, גם אם מדובר באיסוף לדרך, לבדוק שהכל בסדר ולטעמך 🙏`,
-      `היי, אני מתנצלת על החוויה שלך, לנו כשירות לקוחות אין אפשרות להתחקות אחר מה שקיבלת ולכן זה באחריות הסניפים. במידה ויש בעיה חשוב לפנות לצוות העובדים ולבקש החלפה או תיקון. אוכל לבוא לקראתך באופן חד פעמי ולהציע משקה ללא עלות למועדון, להבא יש להתנהל מול הסניף 🙏`,
+      `היי, אני מתנצלת על החוויה שלך, לנו כשירות לקוחות אין אפשרות להתחקות אחר מה שקיבלת ולכן זה באחריות הסניפים. במידה ויש בעיה חשוב לפנות לצוות העובדים ולבקש החלפה או תיקון. אוכל לבוא לקראתך באופן חד פעמי ולהציע משקה ללא עלות למועדון, להבא יש להתנהל מול הסניף🙏`,
       `היי , מתנצלת על החוויה שלך, במידה ויש בעיה במשקה יש לבקש את עזרת הצוות בהחלפה או תיקון וישמחו לעזור לצערי לנו כשירות לקוחות אין דרך להתחקות אחר טעם המשקה ולכן זה באחריות הסניפים. אני מעבירה לבירור ושיפור השירות בסניף כמובן 🙏`,
       `מתנצלת על אי הנוחות שנגרמה, לנו כשירות לקוחות אין אפשרות להתחקות אחר המשקה שקיבלת. כל המתכונים ברשת הינם אחידים ללא שינוי כלל במידה ויש בעיה במשקאות חשוב לפנות לסניף לעזרה בתיקון או החלפה 🙏`
     ];
@@ -140,10 +140,16 @@ html_content = """<!DOCTYPE html>
             class="copy bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg transition">
             <i class="fa fa-copy ml-2"></i><span class="copy-label">העתק</span>
           </button>
-          <button onclick="deleteCard(${id})" 
-            class="delete bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg transition">
-            <i class="fa fa-trash ml-2"></i> מחק
-          </button>
+          <div class="flex space-x-2">
+            <button onclick="editCard(${id})" 
+              class="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-lg transition">
+              <i class="fa fa-edit ml-2"></i> ערוך
+            </button>
+            <button onclick="deleteCard(${id})" 
+              class="delete bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg transition">
+              <i class="fa fa-trash ml-2"></i> מחק
+            </button>
+          </div>
         </div>`;
       return div;
     }
@@ -161,22 +167,29 @@ html_content = """<!DOCTYPE html>
         setTimeout(() => label.textContent = 'העתק', 1000);
       });
     }
+    function editCard(id) {
+      const p = document.querySelector('#card-' + id + ' p');
+      const newText = prompt('ערוך תגובה:', p.innerText);
+      if (newText !== null) p.innerText = newText;
+    }
     function deleteCard(id) {
       const code = prompt('להמשך המחיקה, הכנס קוד:');
       if (code === '5555') {
         const c = document.getElementById('card-' + id);
-        deleted.push(c.cloneNode(true));
+        const container = document.getElementById('responsesContainer');
+        const idx = Array.from(container.children).indexOf(c);
+        deleted.push({clone: c.cloneNode(true), index: idx});
         c.remove();
       } else alert('קוד שגוי.');
     }
     function renderDeleted() {
       const dc = document.getElementById('deletedContainer');
       dc.innerHTML = '';
-      deleted.forEach((d, i) => {
+      deleted.forEach((obj, i) => {
         const w = document.createElement('div');
         w.className = 'deleted-response bg-gray-50 p-4 rounded-lg flex justify-between items-center';
         w.innerHTML = `
-          <p class="whitespace-pre-wrap">${d.querySelector('p').innerText}</p>
+          <p class="whitespace-pre-wrap">${obj.clone.querySelector('p').innerText}</p>
           <button onclick="restore(${i})" 
             class="bg-indigo-600 hover:bg-indigo-700 text-white px-3 py-1 rounded-lg transition">
             שחזר
@@ -191,8 +204,10 @@ html_content = """<!DOCTYPE html>
     function openModal(id) { document.getElementById(id).classList.remove('hidden'); }
     function closeModal(id) { document.getElementById(id).classList.add('hidden'); }
     function restore(i) {
-      const c = deleted.splice(i, 1)[0];
-      document.getElementById('responsesContainer').appendChild(c);
+      const obj = deleted.splice(i, 1)[0];
+      const container = document.getElementById('responsesContainer');
+      const ref = container.children[obj.index] || null;
+      container.insertBefore(obj.clone, ref);
       renderDeleted();
     }
     function addResponse() {
@@ -210,9 +225,9 @@ html_content = """<!DOCTYPE html>
 </html>
 """
 
-# Save the final file
+# Save the file
 file_path = "/mnt/data/responses_final.html"
 with open(file_path, "w", encoding="utf-8") as f:
-    f.write(html_content)
+    f.write(html_updated)
 
 file_path
