@@ -1,6 +1,6 @@
-# Write an even more polished HTML with RTL and improved button styles
+# Writing the final improved HTML file with full functionality and all responses
 
-html_final = """<!DOCTYPE html>
+html_content = """<!DOCTYPE html>
 <html lang="he" dir="rtl" class="scroll-smooth">
 <head>
   <meta charset="UTF-8">
@@ -22,7 +22,7 @@ html_final = """<!DOCTYPE html>
           class="flex items-center bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg shadow-lg transition">
           <i class="fa fa-plus ml-2"></i> הוסף תגובה
         </button>
-        <button onclick="openModal('deletedModal')" 
+        <button onclick="showDeleted()" 
           class="flex items-center bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg shadow-lg transition">
           <i class="fa fa-trash ml-2"></i> תגובות שנמחקו
         </button>
@@ -35,7 +35,7 @@ html_final = """<!DOCTYPE html>
     <input id="searchInput" oninput="filterResponses()" type="text" placeholder="🔍 חפש תגובה..."
       class="w-full p-3 mb-6 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400" />
     <div id="responsesContainer" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-      <!-- response cards -->
+      <!-- response cards will be injected here -->
     </div>
   </main>
 
@@ -93,7 +93,35 @@ html_final = """<!DOCTYPE html>
 בחר ב"פרטי כרטיס" או "הצגת מספר כרטיס".
 שם תוכל לראות את 4 הספרות האחרונות של כרטיסך.`,
       `היי, בינואר שינינו את מבנה מועדון הלקוחות, וכעת ישנן דרגות חברות שונות. דרגת החברות הנוכחית שלך היא דרגת "פרש" (Fresh) שבה לא מתבצרת צבירת נקודות. לאחר שתגיעי ל-10 הזמנות בשנה (כרגע יש לך ), תעברי לדרגת חברות גבוהה יותר, בה תוכלי לצבור נקודות באופן קבוע❤️`,
-      `היי , בינואר שינינו את מבנה מועדון הלקוחות, וכעת ישנן דרגות חברות שונות. דרגת החברות הנוכחית שלך היא דרגת "פרש" (Fresh), שבה לא מתבצרת צבירת נקודות. לאחר שתגיע ל-10 הזמנות בשנה (כרגע יש לך  ), תעבור`.slice(0,0) // truncated for brevity
+      `היי , בינואר שינינו את מבנה מועדון הלקוחות, וכעת ישנן דרגות חברות שונות. דרגת החברות הנוכחית שלך היא דרגת "פרש" (Fresh), שבה לא מתבצרת צבירת נקודות. לאחר שתגיע ל-10 הזמנות בשנה (כרגע יש לך  ), תעבור לדרגת חברות גבוהה יותר, בה תוכל לצבור נקודות באופן קבוע❤️`,
+      `היי מתנצלים על אי הנוחות לצערי אין לנו אפשרות לבדוק קופון שלא אנחנו נפקנו לכן יש לפנות לחברה ממנה רכשת את הקופון על מנת לברר את תקינותו 🙏`,
+      `שלום,
+אין אפשרות ביטול שמזמינים באפליקציה כי ההזמנה עוברת ישירות לסניף להכנת המשקה– ומתחיל תהליך ההכנה באופן מיידי.
+במידה ולא מתבצע איסוף, המשקה נזרק בהתאם לנהלי הרשת.
+יחד עם זאת, ניתן לגשת לסניף בו בוצעה ההזמנה (או לסניף הקרוב ביותר אליך) בזמן אמת, להציג את אישור ההזמנה – והמשקה יוכן עבורך מחדש, ללא תשלום נוסף 😊`,
+      `אני מסכימה לחלוטין עם הדברים שהעלית.
+המשוב שלך יועבר באופן מיידי לזכיין הסניף לצורך בחינה ושיפור השירות.
+אנו מקפידים על רמת שירות גבוהה ואיכותי, וכל משוב נלקח ברצינות רבה. תודה על פנייתך, והמשוב שלך מועבר כעת לצוות המטפל 🙏`,
+      `אני מסכימה לחלוטין עם הדברים שהעלית.
+המשוב שלך יועבר באופן מיידי לזכיין הסניף לצורך בחינה ושיפור השירות. אנו שמים דגש גדול על איכות השירות של העובדים שלנו ואני מייד מעבירה את המשוב שלך 🙏`,
+      `חשוב להדגיש כי במערך העבודה שלנו, על אף שאנחנו מקפידים על הפרדת רכיבים, כל המשקאות מוכנים על אותו פס, ולכן עלולים להיות שאריות של אלרגנים שונים, לרבות חלב ומוצריו. לצערנו, לא ניתן להבטיח סטריליות מוחלטת מאלרגנים בסניפים שלנו. כפי שמצוין בתפריט שלנו ובאפליקציה, אנו ממליצים ללקוחות עם רגישויות או אלרגיות לבדוק מראש את רשימת המרכיבים וליידע את הצוות בסניף כדי שנוכל לסייע בצורה מיטבית 🙏`,
+      `נשמח אם תבחר לקבל את המחווה שהוצעה, מתוך כוונה לשמור על שביעות רצונך כלקוח. יחד עם זאת, נבקש להדגיש כי איננו יכולים להציע פיצוי נוסף מעבר לכך.
+      אנו מקווים שתמשיך ליהנות מהמוצרים והשירות שלנו בעתיד 🙏`,
+      `כמחווה שירותית, אוכל להציע לך 50% הנחה על המשקה הבא. להבא, בכל הנוגע למשקאות יש לפנות ישירות לסניף
+      תודה על ההבנה 🙏`,
+      `זו המחווה השירותית שנוכל להציע. במידה והמשקה לא לטעמך, ניתן לפנות לברמן ולבקש תיקון – הם יבצעו זאת בשמחה, אלו נהלי הרשת.
+      תודה על ההבנה 🙏`,
+      `המשקה שהוכן נזרק, ולכן אין ביכולתנו להציע החזר כספי, מאחר ובוצע שימוש ברכיבים. יחד עם זאת, כמחווה שירותית, אוכל להוסיף לך הטבה של משקה ללא עלות למועדון שלך.
+      ואנו מקווים שהחוויה הבאה תהיה טובה יותר ❤️`,
+      `מתנצלים על אי הנוחות אך יש לוודא את תקינות המשקה לפני לקיחתו ובמידה ויש משהו שאינו לשביעות רצונך יש להודיע לברמן וישמחו לסייע לך`,
+      `אנו מצטערים על החוויה שלך. אשמח אם תוכל לשלוח תמונה של המשקה, על מנת שאוכל להעביר את המקרה לבירור מול הסניף.
+      תודה רבה 🙏`,
+      `אנו לא נמצאים בסניפים, ולכן במידה וקיבלת משקה שלא היה לשביעות רצונך מסיבה כלשהי, ישנה אפשרות להחליף או לתקן אותו במקום. לצערנו, אין לנו אפשרות להתחקות אחר המשקה שקיבלת.
+      תודה על ההבנה 🙏`,
+      `במידה ורכשת בסניף, חשוב לוודא שהמשקה לשביעות רצונך. לצערנו, אין לנו אפשרות להתחקות אחר מה שקיבלת, ולכן זה באחריות הסניף בלבד. אנו תמיד ממליצים, גם אם מדובר באיסוף לדרך, לבדוק שהכל בסדר ולטעמך 🙏`,
+      `היי, אני מתנצלת על החוויה שלך, לנו כשירות לקוחות אין אפשרות להתחקות אחר מה שקיבלת ולכן זה באחריות הסניפים. במידה ויש בעיה חשוב לפנות לצוות העובדים ולבקש החלפה או תיקון. אוכל לבוא לקראתך באופן חד פעמי ולהציע משקה ללא עלות למועדון, להבא יש להתנהל מול הסניף 🙏`,
+      `היי , מתנצלת על החוויה שלך, במידה ויש בעיה במשקה יש לבקש את עזרת הצוות בהחלפה או תיקון וישמחו לעזור לצערי לנו כשירות לקוחות אין דרך להתחקות אחר טעם המשקה ולכן זה באחריות הסניפים. אני מעבירה לבירור ושיפור השירות בסניף כמובן 🙏`,
+      `מתנצלת על אי הנוחות שנגרמה, לנו כשירות לקוחות אין אפשרות להתחקות אחר המשקה שקיבלת. כל המתכונים ברשת הינם אחידים ללא שינוי כלל במידה ויש בעיה במשקאות חשוב לפנות לסניף לעזרה בתיקון או החלפה 🙏`
     ];
     let deleted = [];
 
@@ -107,7 +135,7 @@ html_final = """<!DOCTYPE html>
       div.id = 'card-' + id;
       div.innerHTML = `
         <p class="mb-4 whitespace-pre-wrap">${text}</p>
-        <div class="flex justify-between items-center">
+        <div class="flex justify-between">
           <button onclick="copyText(${id}, this)" 
             class="copy bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg transition">
             <i class="fa fa-copy ml-2"></i><span class="copy-label">העתק</span>
@@ -141,8 +169,6 @@ html_final = """<!DOCTYPE html>
         c.remove();
       } else alert('קוד שגוי.');
     }
-    function openModal(id) { document.getElementById(id).classList.remove('hidden'); }
-    function closeModal(id) { document.getElementById(id).classList.add('hidden'); }
     function renderDeleted() {
       const dc = document.getElementById('deletedContainer');
       dc.innerHTML = '';
@@ -158,6 +184,12 @@ html_final = """<!DOCTYPE html>
         dc.appendChild(w);
       });
     }
+    function showDeleted() {
+      renderDeleted();
+      openModal('deletedModal');
+    }
+    function openModal(id) { document.getElementById(id).classList.remove('hidden'); }
+    function closeModal(id) { document.getElementById(id).classList.add('hidden'); }
     function restore(i) {
       const c = deleted.splice(i, 1)[0];
       document.getElementById('responsesContainer').appendChild(c);
@@ -178,8 +210,9 @@ html_final = """<!DOCTYPE html>
 </html>
 """
 
-with open('/mnt/data/responses_tailwind.html', 'w', encoding='utf-8') as f:
-    f.write(html_final)
+# Save the final file
+file_path = "/mnt/data/responses_final.html"
+with open(file_path, "w", encoding="utf-8") as f:
+    f.write(html_content)
 
-file_path = '/mnt/data/responses_tailwind.html'
 file_path
