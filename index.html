@@ -1,4 +1,4 @@
-# Generating final professional categorized HTML with all responses and copy buttons
+# Generate a fresh, well-styled categorized HTML with copy buttons and search functionality
 
 categories = {
     "חיובים כפולים": [
@@ -29,7 +29,7 @@ categories = {
         """שלום,
 אין אפשרות ביטול שמזמינים באפליקציה כי ההזמנה עוברת ישירות לסניף להכנת המשקה– ומתחיל תהליך ההכנה באופן מיידי.
 במידה ולא מתבצע איסוף, המשקה נזרק בהתאם לנהלי הרשת.
-יחד עם זאת, ניתן לגשת לסניף בו בוצעה ההזמנה (או לסניף הקרוב ביותר אליך) בזמן אמת, להציג את אישור ההזמנה – והמשקה יוכן עבורך מחדש, ללא תשלום נוסף 😊""",
+יחד עם זאת, ניתן לגשת לסניף בו בוצעה ההזמנה (או בסניף הקרוב ביותר אליך) בזמן אמת, להציג את אישור ההזמנה – והמשקה יוכן עבורך מחדש, ללא תשלום נוסף 😊""",
         """במידה ורכשת בסניף, חשוב לוודא שהמשקה לשביעות רצונך. לצערנו, אין לנו אפשרות להתחקות אחר מה שקיבלת, ולכן זה באחריות הסניף בלבד. אנו תמיד ממליצים, גם אם מדובר באיסוף לדרך, לבדוק שהכל בסדר ולטעמך 🙏"""
     ],
     "שירות וחווית לקוח": [
@@ -38,7 +38,7 @@ categories = {
 אנו מקפידים על רמת שירות גבוהה ואיכותית, וכל משוב נלקח ברצינות רבה. תודה על פנייתך, והמשוב שלך מועבר כעת לצוות המטפל 🙏""",
         """אני מסכימה לחלוטין עם הדברים שהעלית.
 המשוב שלך יועבר באופן מיידי לזכיין הסניף לצורך בחינה ושיפור השירות. אנו שמים דגש גדול על איכות השירות של העובדים שלנו ואני מייד מעבירה את המשוב שלך 🙏""",
-        """חשוב להדגיש כי במערך העבודה שלנו, על אף שאנחנו מקפידים על הפרדת רכיבים, כל המשקאות מוכנים על אותו פס, ולכן עלולים להיות שאריות של אלרגנים שונים, לרבות חלב ומוצריו. לצערנו, לא ניתן להבטיח סטריליות מוחלטת מאלרגנים בסניפים שלנו. כפי שמצוין בתפריט שלנו ובאפליקציה, אנו ממליצים ללקוחות עם רגישויות או אלרגיות לבדוק מראש את רשימת המרכיבים וליידע את הצוות בסניף כדי שנוכל לסייע בצורה מיטבית 🙏"""
+        """חשוב להדגיש כי במערך העבודה שלנו, על אף שאנחנו מקפידים על הפרדת רכיבים, כל המשקאות מוכנים על אותו פס, ולכן עלולים להיות שאריות של אלרגנים שונים, לרבות חלב ומוצריו. לצערנו, לא ניתן להבטיח סטריליות מוחלטת מאלרגנים בסניפים שלנו. כפי שמצוין בתפריט שלנו ובאפליקציה, אנו ממליצים ללקוחות עם רגישויות או אלרגיות לבדוק מראש את רשימת המרכיבים וליידע את הצוות בסניף כדי שנוכל לסייע בצורה מיטבית 🙏""",
     ],
     "פיצוי": [
         """נשמח אם תבחר לקבל את המחווה שהוצעה, מתוך כוונה לשמור על שביעות רצונך כלקוח. יחד עם זאת, נבקש להדגיש כי איננו יכולים להציע פיצוי נוסף מעבר לכך.
@@ -56,70 +56,72 @@ categories = {
     ]
 }
 
-html = ['<!DOCTYPE html>',
-'<html lang="he" dir="rtl">',
-'<head>',
-'  <meta charset="UTF-8">',
-'  <meta name="viewport" content="width=device-width, initial-scale=1">',
-'  <title>תגובות שירות לקוחות</title>',
-'  <script src="https://cdn.tailwindcss.com"></script>',
-'  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>',
-'</head>',
-'<body class="bg-gray-100 text-gray-900 antialiased">',
-'  <div class="max-w-6xl mx-auto p-6 space-y-12">',
-'    <header class="bg-white p-6 rounded-xl shadow-md">',
-'      <div class="flex flex-col md:flex-row justify-between items-center gap-4">',
-'        <h1 class="text-4xl font-extrabold">תגובות שירות לקוחות</h1>',
-'        <input id="search" oninput="filter()" type="text" placeholder="🔍 חפש תגובה..." class="w-full md:w-1/3 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-400"/>',
-'      </div>',
-'    </header>'
+html_parts = [
+"<!DOCTYPE html>",
+"<html lang=\"he\" dir=\"rtl\">",
+"<head>",
+"  <meta charset=\"UTF-8\">",
+"  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">",
+"  <title>תגובות שירות לקוחות</title>",
+"  <script src=\"https://cdn.tailwindcss.com\"></script>",
+"  <link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css\"/>",
+"</head>",
+"<body class=\"bg-gray-50 text-gray-900 antialiased\">",
+"  <div class=\"max-w-5xl mx-auto p-6 space-y-12\">",
+"    <header class=\"flex flex-col md:flex-row justify-between items-center gap-4\">",
+"      <h1 class=\"text-4xl font-bold\">תגובות שירות לקוחות</h1>",
+"      <input id=\"search\" oninput=\"filterResponses()\" type=\"text\" placeholder=\"🔍 חפש תגובה...\" class=\"w-full md:w-1/3 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-400\"/>",
+"    </header>"
 ]
 
-for title, items in categories.items():
-    html.append(f'    <section class="space-y-6">')
-    html.append(f'      <h2 class="text-2xl font-semibold border-b-2 border-indigo-300 pb-2">{title}</h2>')
-    html.append('      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">')
+for category, items in categories.items():
+    html_parts.append(f"    <section class=\"space-y-6\">")
+    html_parts.append(f"      <h2 class=\"text-2xl font-semibold border-b-2 border-indigo-300 pb-2\">{category}</h2>")
+    html_parts.append("      <div class=\"grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6\">")
     for item in items:
         safe = item.replace('"', '&quot;')
-        html.append('        <div class="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition relative">')
-        html.append(f'          <p class="whitespace-pre-wrap text-base leading-relaxed mb-4">{safe}</p>')
-        html.append(f'          <button data-text="{safe}" class="copy-btn absolute top-4 left-4 bg-indigo-500 hover:bg-indigo-600 text-white p-3 rounded-full shadow-lg transition">')
-        html.append('            <i class="fa fa-copy"></i>')
-        html.append('          </button>')
-        html.append('        </div>')
-    html.append('      </div>')
-    html.append('    </section>')
+        html_parts.append("        <div class=\"relative bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition\">")
+        html_parts.append(f"          <p class=\"whitespace-pre-wrap text-base leading-relaxed mb-4\">{safe}</p>")
+        html_parts.append(f"          <button data-text=\"{safe}\" class=\"copy-btn absolute top-4 right-4 bg-indigo-500 hover:bg-indigo-600 text-white p-3 rounded-full shadow-lg transition\">")
+        html_parts.append("            <i class=\"fa fa-copy\"></i>")
+        html_parts.append("          </button>")
+        html_parts.append("        </div>")
+    html_parts.append("      </div>")
+    html_parts.append("    </section>")
 
-html.extend(['  </div>',
-'  <script>',
-'    document.querySelectorAll(".copy-btn").forEach(btn => {',
-'      btn.addEventListener("click", () => {',
-'        const txt = btn.getAttribute("data-text");',
-'        navigator.clipboard.writeText(txt);',
-'        btn.innerHTML = `<i class="fa fa-check"></i>`;',
-'        setTimeout(() => btn.innerHTML = `<i class="fa fa-copy"></i>`, 1000);',
-'      });',
-'    });',
-'    function filter() {',
-'      const q = document.getElementById("search").value.toLowerCase();',
-'      document.querySelectorAll("section").forEach(sec => {',
-'        let showSection = false;',
-'        sec.querySelectorAll(".bg-white").forEach(card => {',
-'          const match = card.innerText.toLowerCase().includes(q);',
-'          card.style.display = match ? "" : "none";',
-'          if (match) showSection = true;',
-'        });',
-'        sec.style.display = showSection ? "" : "none";',
-'      });',
-'    }',
-'  </script>',
-'</body>',
-'</html>'
+html_parts.extend([
+"  </div>",
+"  <script>",
+"    function filterResponses() {",
+"      const q = document.getElementById('search').value.toLowerCase();",
+"      document.querySelectorAll('section').forEach(sec => {",
+"        let any = false;",
+"        sec.querySelectorAll('div.relative').forEach(card => {",
+"          const match = card.innerText.toLowerCase().includes(q);",
+"          card.style.display = match ? '' : 'none';",
+"          if(match) any = true;",
+"        });",
+"        sec.style.display = any ? '' : 'none';",
+"      });",
+"    }",
+"    document.querySelectorAll('.copy-btn').forEach(btn => {",
+"      btn.addEventListener('click', () => {",
+"        const text = btn.getAttribute('data-text');",
+"        navigator.clipboard.writeText(text);",
+"        btn.innerHTML = '<i class=\"fa fa-check\"></i>';",
+"        setTimeout(() => btn.innerHTML = '<i class=\"fa fa-copy\"></i>', 1000);",
+"      });",
+"    });",
+"  </script>",
+"</body>",
+"</html>"
 ])
 
-html_content = "\n".join(html)
+html_content = "\n".join(html_parts)
 
-with open('/mnt/data/responses_categorized_professional.html', 'w', encoding='utf-8') as f:
+# Save to file
+file_path = "/mnt/data/responses_categorized_professional.html"
+with open(file_path, "w", encoding="utf-8") as f:
     f.write(html_content)
 
-'/mnt/data/responses_categorized_professional.html'
+file_path
