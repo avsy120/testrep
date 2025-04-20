@@ -1,96 +1,81 @@
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
   <title>תגובות שירות לקוחות</title>
-  <!-- Google Font -->
-  <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;600&display=swap" rel="stylesheet">
   <style>
-    :root {
-      --primary: #4A90E2;
-      --bg: #F0F4F8;
-      --card-bg: #FFFFFF;
-      --text: #333333;
-      --gap: 16px;
-      --radius: 8px;
-      --border: #E1E8ED;
-    }
-    * { box-sizing: border-box; }
     body {
       margin: 0; padding: 0;
-      font-family: 'Assistant', sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      padding: var(--gap);
+      font-family: Arial, sans-serif;
+      background: #f5f5f5;
+      color: #333;
     }
     .container {
-      max-width: 1024px;
-      margin: 0 auto;
+      max-width: 900px;
+      margin: 20px auto;
+      padding: 0 20px;
     }
     h1 {
       text-align: center;
-      font-size: 2.5rem;
-      color: var(--primary);
-      margin-bottom: var(--gap);
-      font-weight: 600;
+      margin-bottom: 20px;
+      font-size: 2em;
     }
     .search {
       width: 100%;
-      padding: 12px var(--gap);
-      font-size: 1rem;
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      margin-bottom: calc(var(--gap) * 1.5);
+      padding: 10px;
+      font-size: 1em;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      margin-bottom: 30px;
     }
     .category {
-      margin-bottom: calc(var(--gap) * 2);
+      margin-top: 40px;
     }
     .category h2 {
-      font-size: 1.4rem;
-      font-weight: 600;
-      border-left: 4px solid var(--primary);
-      padding-left: var(--gap);
-      margin-bottom: var(--gap);
+      font-size: 1.4em;
+      color: #0056b3;
+      border-bottom: 2px solid #0056b3;
+      padding-bottom: 5px;
+      margin-bottom: 15px;
     }
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: var(--gap);
+      grid-template-columns: repeat(auto-fill,minmax(280px,1fr));
+      gap: 20px;
     }
     .card {
-      background: var(--card-bg);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: var(--gap);
-      position: relative;
-      transition: box-shadow .2s;
+      background: #fff;
+      padding: 15px;
+      border-radius: 6px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      display: flex;
+      flex-direction: column;
     }
-    .card:hover {
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    }
-    .copy-btn {
-      position: absolute;
-      top: var(--gap);
-      right: var(--gap);
-      background: var(--primary);
-      border: none;
+    .card button.copy-btn {
+      background: #0056b3;
       color: #fff;
-      padding: 6px 10px;
-      font-size: 0.9rem;
-      border-radius: var(--radius);
+      border: none;
+      padding: 8px 12px;
+      border-radius: 4px;
       cursor: pointer;
+      font-size: 0.9em;
+      margin-bottom: 10px;
       transition: background .2s;
     }
-    .copy-btn:hover { background: #357ABD; }
-    .copy-btn.copied { background: #28A745 !important; }
-    .card p {
-      margin-top: var(--gap);
-      white-space: pre-wrap;
-      line-height: 1.5;
+    .card button.copy-btn:hover {
+      background: #004494;
     }
-    @media(max-width:600px) {
-      h1 { font-size: 2rem; }
+    .card button.copy-btn.copied {
+      background: #28a745 !important;
+    }
+    .card p {
+      margin: 0;
+      line-height: 1.4;
+      white-space: pre-wrap;
+      flex: 1;
+    }
+    @media(max-width:600px){
       .grid { grid-template-columns: 1fr; }
     }
   </style>
@@ -98,13 +83,18 @@
 <body>
   <div class="container">
     <h1>תגובות שירות לקוחות</h1>
-    <input id="search" class="search" placeholder="🔍 חפש תגובה..." oninput="filterResponses()">
+    <input id="search" class="search" placeholder="🔍 חפש תגובה..." oninput="filterResponses()"/>
     <div id="categories"></div>
   </div>
+
   <script>
+    // ------------------------------------------------------
+    // כאן ניתן להוסיף/להסיר תגובות בקלות על ידי עריכה של
+    // האובייקט categoriesData
+    // ------------------------------------------------------
     const categoriesData = {
       "חיובים כפולים": [
-        `המערכת מזהה באופן אוטומטי חיובים כפולים או שגויים ופועלת לביטולם. עם זאת, עדכון הנתונים עשוי להימשך מספר ימים.
+        `המערכת מזהה באופן אוטומטי חיובים כפולים או שגויים ומבטלת אותם. עם זאת, עדכון הנתונים עשוי להימשך מספר ימים.
 במידה והחיובים ממשיכים להופיע בפירוט העסקאות, ניתן לפנות אלינו ואנו נדאג לזיכוי בהתאם 🙏`,
         `שלום,
 לאחר בדיקה, לא נמצא חיוב כפול. ייתכן שיידרש פרק זמן קצר עד שהחיוב יוסר באופן סופי. בשלב זה הוא חסום במערכות שלנו.
@@ -113,20 +103,32 @@
       ],
       "ארנק דיגיטלי": [
         `אשמח לקבל את 4 הספרות האחרונות של אמצעי התשלום ששימש לביצוע ההזמנה, על מנת שנוכל לאתר אותה במערכת.
-לתשומת לבך – במידה והתשלום בוצע באמצעות ארנק דיגיטלי כגון Google Pay או Apple Pay, ייתכן שהספרות האחרונות שונות מאלה שעל כרטיס האשראי.
+לתשומת לבך – במידה והתשלום בוצע באמצעות ארנק דיגיטלי כגון Google Pay או Apple Pay, ייתכן שהספרות האחרונות שונות מאלה שמופיעות על כרטיס האשראי.
 תודה רבה 🙏`,
-        `במידה והתשלום בוצע באמצעות Apple Pay, ניתן למצוא את מספר הכרטיס הווירטואלי כך:
-יש להיכנס לארנק הדיגיטלי (Wallet), ללחוץ על שלוש הנקודות בצד העליון של המסך, לבחור ב"מספר כרטיס" – ושם יוצג מספר הכרטיס המשויך לארנק הדיגיטלי.`,
-        `במידה שהתשלום בוצע ב Google Pay:
-פתח את אפליקציית Google Pay
-בחר בכרטיס שברצונך לבדוק.
-לחץ על הסמל של שלוש הנקודות בצד העליון של המסך.
-בחר ב"פרטי כרטיס" או "הצגת מספר כרטיס".
-שם תוכל לראות את 4 הספרות האחרונות של כרטיסך.`
+        `במידה והתשלום בוצע באמצעות Apple Pay, שים/י לב כי 4 הספרות האחרונות של כרטיס האשראי שונות מאלה שמופיעות ב־Apple Pay – כיוון שמדובר במספר כרטיס ווירטואלי.
+
+כדי לאתר את המספר הנכון:
+1. יש להיכנס לארנק הדיגיטלי (Wallet)
+2. ללחוץ על שלוש הנקודות שבפינה העליונה של המסך
+3. לבחור באפשרות "מספר כרטיס"
+4. שם יוצג מספר הכרטיס המשויך לארנק הדיגיטלי
+
+נשמח אם תוכל/י לשלוח לנו את 4 הספרות האחרונות – ונבצע את הבדיקה עבורך בהקדם ✨`,
+        `במידה והתשלום בוצע באמצעות Google Pay,
+כך ניתן למצוא את 4 הספרות האחרונות של אמצעי התשלום:
+פתח/י את אפליקציית Google Pay
+1. בחר/י בכרטיס הרלוונטי
+2. לחץ/י על שלוש הנקודות בפינה העליונה
+3. בחר/י ב"פרטי כרטיס" או "הצגת מספר כרטיס"
+4. יוצגו 4 הספרות האחרונות של הכרטיס הווירטואלי
+
+נשמח אם תוכל/י לשלוח לנו את 4 הספרות האחרונות – ונבצע את הבדיקה עבורך בהקדם ✨`
       ],
       "קופון חיצוני": [
         `היי, מתנצלים על אי הנוחות 🙏
-לצערנו, אין לנו אפשרות לבדוק קופון שלא אנחנו נפקנו לכן יש לפנות לחברה ממנה רכשת את הקופון על מנת לברר את תקינותו 🙏`
+לצערנו, אין לנו אפשרות לבדוק קופון שלא הופק דרכנו.
+יש לפנות ישירות לחברה ממנה נרכש הקופון, על מנת לבדוק את תקינותו.
+תודה על ההבנה 💛`
       ],
       "הזמנה לסניף שגוי": [
         `שלום,
@@ -137,55 +139,108 @@
       "שירות וחווית לקוח": [
         `אני מסכימה לחלוטין עם הדברים שהעלית.
 המשוב שלך יועבר באופן מיידי לזכיין הסניף לצורך בחינה ושיפור השירות.
-אנו מקפידים על רמת שירות גבוהה ואיכותית, וכל משוב נלקח ברצינות רבה.
-תודה על פנייתך 🙏`,
+אנו מקפידים על רמת שירות גבוהה ואיכותית, וכל משוב נלקח ברצינות רבה. תודה על פנייתך, והמשוב שלך מועבר כעת לצוות המטפל 🙏`,
         `אני מסכימה לחלוטין עם הדברים שהעלית.
-המשוב שלך יועבר באופן מיידי לזכיין הסניף לצורך בחינה ושיפור השירות.
-אנחנו שמים דגש על איכות השירות של העובדים שלנו ואני מייד מעבירה את המשוב שלך 🙏`
+המשוב שלך יועבר באופן מיידי לזכיין הסניף לצורך בחינה ושיפור השירות. אנו שמים דגש גדול על איכות השירות של העובדים שלנו ואני מייד מעבירה את המשוב שלך 🙏`,
+        `היי, מתנצלת על החוויה שלך. אני אשמח לתמונה של המשקאות על מנת שאוכל להעביר לבירור מול הסניף🙏`
       ],
       "פיצוי": [
-        `נשמח אם תבחר לקבל את המחווה שהוצעה, מתוך כוונה לשמור על שביעות רצונך כלקוח.
+        `נשמח אם תבחר לקבל את המחווה שהוצעה, מתוך כוונה לשמור על שביעות רצונך כלקוח. יחד עם זאת, נבקש להדגיש כי איננו יכולים להציע פיצוי נוסף מעבר לכך.
 אנו מקווים שתמשיך ליהנות מהמוצרים והשירות שלנו בעתיד 🙏`,
-        `כמחווה שירותית, אוכל להציע לך 50% הנחה על המשקה הבא.
-לתשומת לבך – כל פנייה נוספת תטופל בסניף.
+        `כמחווה שירותית, אוכל להציע לך 50% הנחה על המשקה הבא. להבא, בכל הנוגע למשקאות יש לפנות ישירות לסניף
 תודה על ההבנה 🙏`,
-        `זו המחווה השירותית שנוכל להציע.
-במידה והמשקה לא לטעמך, ניתן לפנות לברמן ולבקש תיקון.
+        `זו המחווה השירותית שנוכל להציע. במידה והמשקה לא לטעמך, ניתן לפנות לברמן ולבקש תיקון – הם יבצעו זאת בשמחה, אלו נהילי הרשת.
 תודה על ההבנה 🙏`,
-        `המשקה שהוכן נזרק, ולכן אין ביכולתנו להציע החזר כספי.
-עם זאת, אוכל להוסיף הטבה ללא עלות למועדון שלך.
-❤️`]
+        `המשקה שהוכן נזרק, ולכן אין ביכולתנו להציע החזר כספי, מאחר ובוצע שימוש ברכיבים. יחד עם זאת, כמחווה שירותית, אוכל להוסיף לך הטבה של משקה ללא עלות למועדון שלך.
+ואנו מקווים שהחוויה הבאה תהיה טובה יותר ❤️`,
+        `אנו לא נמצאים בסניפים, ולכן במידה וקיבלת משקה שלא היה לשביעות רצונך מסיבה כלשהי, ישנה אפשרות להחליף או לתקן אותו במקום. לצערנו, אין לנו אפשרות להתחקות אחר המשקה שקיבלת.
+תודה על ההבנה 🙏`
+
+      ],
+      "צבירת נקודות": [
+        `היי, בינואר שינינו את מבנה מועדון הלקוחות, וכעת ישנן דרגות חברות שונות. דרגת החברות הנוכחית שלך היא דרגת "פרש" (Fresh) שבה לא מתבצרת צבירת נקודות. לאחר שתגיעי ל-10 הזמנות בשנה (כרגע יש לך ), תעברי לדרגת חברות גבוהה יותר, בה תוכלי לצבור נקודות באופן קבוע❤️`,
+        `היי , בינואר שינינו את מבנה מועדון הלקוחות, וכעת ישנן דרגות חברות שונות. דרגת החברות הנוכחית שלך היא דרגת "פרש" (Fresh), שבה לא מתבצרת צבירת נקודות. לאחר שתגיעי ל-10 הזמנות בשנה (כרגע יש לך  ), תעבור לדרגת חברות גבוהה יותר, בה תוכל לצבור נקודות באופן קבוע❤️`
+      ],
+      "אלרגיות": [
+        `חשוב להדגיש כי במערך העבודה שלנו, על אף שאנחנו מקפידים על הפרדת רכיבים, כל המשקאות מוכנים על אותו פס, ולכן עלולים להיות שאריות של אלרגנים שונים, לרבות חלב ומוצריו. לצערנו, לא ניתן להבטיח סטריליות מוחלטת מאלרגנים בסניפים שלנו. כפי שמצוין בתפריט שלנו ובאפליקציה, אנו ממליצים ללקוחות עם רגישויות או אלרגיות לבדוק מראש את רשימת המרכיבים וליידע את הצוות בסניף כדי שנוכל לסייע בצורה מיטבית 🙏`
+      ],
+      "משלוחים/זמני המתנה בסניף": [
+        `היי, אני מצטערת לשמוע על העיכוב בקבלת המשלוח 🙏
+חשוב לנו לשתף שזמני ההגעה עשויים להשתנות בהתאם לעומסים או גורמים לוגיסטיים בשטח, ולכן לא נוכל להתחייב על זמן אספקה מדויק 🚚
+
+אנחנו לגמרי מבינים את התחושה ומעריכים מאוד את הסבלנות שלך 💛
+לצורך בדיקה, נודה אם תשלח/י לנו את השם המלא כפי שהוזן בהזמנה – ונעדכן אותך בהקדם ✨`,
+        `היי, אני מתנצלת על זמן ההמתנה הממושך 🙏
+לעיתים, במיוחד בשעות עמוסות, ייתכנו עיכובים – ואנחנו באמת עושים כל מאמץ לספק שירות מהיר ואיכותי לכל לקוח.
+תודה רבה על הסבלנות וההבנה שלך 💛`
+        ],
+      "קוד אימות": [
+        `במידה ואינך מצליח/ה לקבל את קוד האימות, ייתכן שההודעה נחסמה.
+נשמח אם תוכל/י לבדוק בתיקיית הספאם בהודעות שלך
+כדי להקל על החיפוש, נסה/י להקליד בשורת החיפוש את המילה rebar באנגלית 🔍
+
+בהצלחה! ואם עדיין לא מתקבל – אנחנו כאן לכל שאלה 💚`
+        ],
+      "זיכוי": [
+        `ביצעתי עבורך את הזיכוי – תוכל/י לראות אותו בחשבון שלך בימים הקרובים.
+המשך יום טוב 💖`,
+    `העברתי את הזיכוי – תוכל/י לראות אותו בחשבון שלך עד 14 ימי עסקים.
+המשך יום מקסים 💖`,
+        `תודה רבה. מצאתי את העסקה שלך אך היא עדיין לא נקלטה במערכת אצלנו. מחר אבצע עבורך את הזיכוי🙏`
+        ],
+      "הוספת הטבה/נקודות למועדון": [
+    `הוספתי את ההטבה למועדון שלך – יש לרענן את האפליקציה ותוכל/י לראות אותה.
+המשך יום טוב 💖`,
+    `הוספתי את הנקודות למועדון שלך – יש לרענן את האפליקציה ותוכל/י לראות אותן.
+המשך יום נעים 💖`
+        ]
     };
+
     function render() {
-      const root = document.getElementById('categories');root.innerHTML='';
-      for (let [cat, arr] of Object.entries(categoriesData)){
-        let sec=document.createElement('div');sec.className='category';
-        sec.innerHTML=`<h2>${cat}</h2><div class="grid"></div>`;
-        let grid=sec.querySelector('.grid');
-        arr.forEach(txt=>{
-          let card=document.createElement('div');card.className='card';
-          card.innerHTML=`
+      const root = document.getElementById('categories');
+      root.innerHTML = '';
+      for (const [cat, arr] of Object.entries(categoriesData)) {
+        const sec = document.createElement('div');
+        sec.className = 'category';
+        sec.innerHTML = `<h2>${cat}</h2><div class="grid"></div>`;
+        const grid = sec.querySelector('.grid');
+        arr.forEach(txt => {
+          const card = document.createElement('div');
+          card.className = 'card';
+          card.innerHTML = `
             <button class="copy-btn" data-text="${txt.replace(/"/g,'&quot;')}">העתק</button>
-            <p>${txt.replace(/\n/g,'<br>')}</p>
-          `;
+            <p>${txt.replace(/\n/g,'<br/>')}</p>`;
           grid.appendChild(card);
         });
         root.appendChild(sec);
       }
-      document.querySelectorAll('.copy-btn').forEach(btn=>{
-        btn.onclick=()=>{
+      document.querySelectorAll('.copy-btn').forEach(btn => {
+        btn.onclick = () => {
           navigator.clipboard.writeText(btn.dataset.text);
-          btn.classList.add('copied');btn.textContent='הועתק';
-          setTimeout(()=>{btn.classList.remove('copied');btn.textContent='העתק'},800);
-        }
+          btn.classList.add('copied');
+          btn.textContent = 'הועתק';
+          setTimeout(() => {
+            btn.classList.remove('copied');
+            btn.textContent = 'העתק';
+          }, 800);
+        };
       });
     }
-    function filterResponses(){
-      const q=document.getElementById('search').value.toLowerCase();
-      document.querySelectorAll('.card').forEach(c=>c.style.display=c.querySelector('p').innerText.toLowerCase().includes(q)?'':'none');
-      document.querySelectorAll('.category').forEach(cat=>cat.style.display=cat.querySelector('.card:not([style*="display: none"])')?'':'none');
+
+    function filterResponses() {
+      const q = document.getElementById('search').value.toLowerCase();
+      document.querySelectorAll('.card').forEach(c => {
+        c.style.display =
+          c.querySelector('p').innerText.toLowerCase().includes(q)
+            ? '' : 'none';
+      });
+      document.querySelectorAll('.category').forEach(cat => {
+        cat.style.display = cat.querySelector('.card:not([style*="display: none"])')
+          ? '' : 'none';
+      });
     }
-    window.onload=render;
+
+    window.onload = render;
   </script>
 </body>
 </html>
