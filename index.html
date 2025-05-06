@@ -1,230 +1,233 @@
-
-
-```html
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>תגובות שירות לקוחות וסניפים כשרים</title>
-  <style>
-    body {
-      margin: 0; padding: 0;
-      font-family: Arial, sans-serif;
-      background: #f5f5f5;
-      color: #333;
-    }
-    .container {
-      max-width: 900px;
-      margin: 20px auto;
-      padding: 0 20px;
-    }
-    h1 {
-      text-align: center;
-      margin-bottom: 20px;
-      font-size: 2em;
-    }
-    .search {
-      width: 100%;
-      padding: 10px;
-      font-size: 1em;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      margin-bottom: 20px;
-    }
-    /* סגנונות לרשימת סניפים כשרים */
-    details.branch-list {
-      margin: 20px 0;
-      background: #fff;
-      border-radius: 6px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-      overflow: hidden;
-    }
-    details.branch-list summary {
-      background: #0066cc;
-      color: #fff;
-      padding: 12px 15px;
-      font-size: 1.2em;
-      cursor: pointer;
-      user-select: none;
-    }
-    details.branch-list summary:hover {
-      background: #0055aa;
-    }
-    .branch-table {
-      width: 100%;
-      border-collapse: collapse;
-    }
-    .branch-table th,
-    .branch-table td {
-      padding: 12px 15px;
-      text-align: center;
-      border-bottom: 1px solid #ececec;
-    }
-    .branch-table thead {
-      background: #f0f0f0;
-    }
-    .branch-table tbody tr:nth-child(even) {
-      background: #fafafa;
-    }
-    .branch-table tbody tr:hover {
-      background: #e0e7ff;
-    }
-    .branch-table button.copy-btn {
-      background: #008cba;
-      color: #fff;
-      border: none;
-      padding: 6px 12px;
-      border-radius: 4px;
-      cursor: pointer;
-    }
-    .branch-table button.copy-btn:hover {
-      background: #005f5f;
-    }
-    /* סגנונות לתגובות שירות הלקוחות */
-    .category {
-      margin-top: 40px;
-    }
-    .category h2 {
-      font-size: 1.4em;
-      color: #0056b3;
-      border-bottom: 2px solid #0056b3;
-      padding-bottom: 5px;
-      margin-bottom: 15px;
-    }
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill,minmax(280px,1fr));
-      gap: 20px;
-    }
-    .card {
-      background: #fff;
-      padding: 15px;
-      border-radius: 6px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-      display: flex;
-      flex-direction: column;
-    }
-    .card button.copy-btn {
-      background: #0056b3;
-      color: #fff;
-      border: none;
-      padding: 8px 12px;
-      border-radius: 4px;
-      cursor: pointer;
-      font-size: 0.9em;
-      margin-bottom: 10px;
-      transition: background .2s;
-    }
-    .card button.copy-btn:hover {
-      background: #004494;
-    }
-    .card button.copy-btn.copied {
-      background: #28a745 !important;
-    }
-    .card p {
-      margin: 0;
-      line-height: 1.4;
-      white-space: pre-wrap;
-      flex: 1;
-    }
-    @media(max-width:600px){
-      .grid { grid-template-columns: 1fr; }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>מערכת שירות לקוחות</title>
+    <style>
+        body {
+            font-family: 'Heebo', Arial, sans-serif;
+            background: #f9fbfc;
+            margin: 0;
+            padding: 30px 20px;
+            color: #333;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+        body.dark-mode {
+            background: #2e2e30;
+            color: #e5e5e5;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .dark-mode-toggle {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
+        }
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: 0.4s;
+            border-radius: 24px;
+        }
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: 0.4s;
+            border-radius: 50%;
+        }
+        input:checked + .slider {
+            background-color: #4caf50;
+        }
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+
+        .categories {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+
+        .category {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8px 16px;
+            border-radius: 20px;
+            background: #ffffff;
+            border: 1.5px solid #cccccc;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            color: #333;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .category:hover:not(.active) {
+            background: #e6f0ff;
+            color: #004a99;
+            border-color: #004a99;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+        }
+
+        .category.active {
+            background: #004a99;
+            color: #fff;
+            border-color: #004a99;
+            font-weight: 700;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        body.dark-mode .category {
+            background: #3c3c3f;
+            border-color: #666;
+            color: #ccc;
+        }
+
+        body.dark-mode .category.active {
+            background: #4a90e2;
+            border-color: #4a90e2;
+            color: #fff;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .search-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 25px;
+        }
+        .search-box {
+            width: 100%;
+            max-width: 500px;
+            padding: 10px 18px;
+            border-radius: 20px;
+            border: 1px solid #ccc;
+            font-size: 15px;
+            transition: border 0.3s ease, box-shadow 0.3s ease;
+        }
+        .search-box:focus {
+            border-color: #004a99;
+            box-shadow: 0 2px 8px rgba(0, 74, 153, 0.2);
+            outline: none;
+        }
+        #responses {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+        .response {
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            max-width: 700px;
+            width: 100%;
+            padding: 16px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+        }
+        .response:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+        }
+        body.dark-mode .response {
+            background: #3c3c3f;
+            border-color: #555;
+        }
+        .highlight {
+            background-color: #ffeb3b;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-weight: bold;
+            color: #000;
+        }
+        body.dark-mode .highlight {
+            background-color: #ffee58;
+            color: #000;
+        }
+        .copy-btn {
+            background: #004a99;
+            color: #fff;
+            border: none;
+            border-radius: 16px;
+            padding: 6px 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+            font-size: 14px;
+        }
+        .copy-btn:hover {
+            background: #003876;
+            transform: scale(1.05);
+        }
+        .copy-btn.copied {
+            background: #4caf50 !important;
+            color: white !important;
+        }
+    </style>
 </head>
 <body>
 
-  <div class="container">
-    <h1>סניפים כשרים</h1>
-    <input id="branch-search" class="search" placeholder="🔍 חפש סניף..." oninput="filterBranches()"/>
-    <details class="branch-list">
-      <summary>הצג/הסתר סניפים</summary>
-      <table class="branch-table">
-        <thead>
-          <tr><th>עיר</th><th>סניף</th><th>כתובת</th><th>פעולה</th></tr>
-        </thead>
-        <tbody>
-           <tr><td>שוהם</td><td>מרכז מסחרי</td><td>שד' עמק איילון 30, שוהם</td><td><button class="copy-btn" data-text="שוהם - מרכז מסחרי - שד' עמק איילון 30, שוהם">העתקה</button></td></tr>
-          <tr><td>רעננה</td><td>רננים</td><td>המלאכה 2, רעננה</td><td><button class="copy-btn" data-text="רעננה - רננים - המלאכה 2, רעננה">העתקה</button></td></tr>
-          <tr><td>רמת גן</td><td>רמת אפעל</td><td>דרך שיבא 14, רמת גן</td><td><button class="copy-btn" data-text="רמת גן - רמת אפעל - דרך שיבא 14, רמת גן">העתקה</button></td></tr>
-          <tr><td>רמת גן</td><td>מרום נווה</td><td>לנדאו חיים 7, רמת גן</td><td><button class="copy-btn" data-text="רמת גן - מרום נווה - לנדאו חיים 7, רמת גן">העתקה</button></td></tr>
-          <tr><td>רמת גן</td><td>ביאליק</td><td>ביאליק 76, פינת ז'בוטינסקי, רמת גן</td><td><button class="copy-btn" data-text="רמת גן - ביאליק - ביאליק 76, פינת ז'בוטינסקי, רמת גן">העתקה</button></td></tr>
-          <tr><td>רמלה</td><td>עזריאלי</td><td>שדרות דוד ריזאל 1, רמלה</td><td><button class="copy-btn" data-text="רמלה - עזריאלי - שדרות דוד ריזאל 1, רמלה">העתקה</button></td></tr>
-          <tr><td>ראשון לציון</td><td>ראשונים</td><td>שדרות נים 2, קניון עזריאלי ראשונים, ראשון לציון</td><td><button class="copy-btn" data-text="ראשון לציון - ראשונים - שדרות נים 2, קניון עזריאלי ראשונים, ראשון לציון">העתקה</button></td></tr>
-          <tr><td>ראשון לציון</td><td>קניון הזהב</td><td>דוד סחרוב 21, ראשון לציון</td><td><button class="copy-btn" data-text="ראשון לציון - קניון הזהב - דוד סחרוב 21, ראשון לציון">העתקה</button></td></tr>
-          <tr><td>ראש פינה</td><td>סנטר הגליל</td><td>סנטר הגליל, ראש פינה</td><td><button class="copy-btn" data-text="ראש פינה - סנטר הגליל - סנטר הגליל, ראש פינה">העתקה</button></td></tr>
-          <tr><td>קרית ביאליק</td><td>קיריון</td><td>דרך עכו חיפה 192, קרית ביאליק</td><td><button class="copy-btn" data-text="קרית ביאליק - קיריון - דרך עכו חיפה 192, קרית ביאליק">העתקה</button></td></tr>
-          <tr><td>קרית אתא</td><td>שער הצפון</td><td>דרך חיפה 52, קרית אתא</td><td><button class="copy-btn" data-text="קרית אתא - שער הצפון - דרך חיפה 52, קרית אתא">העתקה</button></td></tr>
-          <tr><td>קריית השרון</td><td>מרכז אלון</td><td>טוס לנטוס, נתניה</td><td><button class="copy-btn" data-text="קריית השרון - מרכז אלון - טוס לנטוס, נתניה">העתקה</button></td></tr>
-          <tr><td>קריית אונו</td><td>הקריה האקדמית</td><td>הקריה האקדמית אונו, קריית אונו</td><td><button class="copy-btn" data-text="קריית אונו - הקריה האקדמית - הקריה האקדמית אונו, קריית אונו">העתקה</button></td></tr>
-          <tr><td>פתח תקווה</td><td>סירקין</td><td>אלעזר פרידמן 9, פתח תקווה</td><td><button class="copy-btn" data-text="פתח תקווה - סירקין - אלעזר פרידמן 9, פתח תקווה">העתקה</button></td></tr>
-          <tr><td>פתח תקווה</td><td>הקניון הגדול</td><td>ז'בוטינסקי 72, פתח תקווה</td><td><button class="copy-btn" data-text="פתח תקווה - הקניון הגדול - ז'בוטינסקי 72, פתח תקווה">העתקה</button></td></tr>
-          <tr><td>ערד</td><td>–</td><td>התעשייה 60, ערד</td><td><button class="copy-btn" data-text="ערד - – - התעשייה 60, ערד">העתקה</button></td></tr>
-          <tr><td>עפולה</td><td>תחנה מרכזית</td><td>קהילת ציון 3, תחנה מרכזית, עפולה</td><td><button class="copy-btn" data-text="עפולה - תחנה מרכזית - קהילת ציון 3, תחנה מרכזית, עפולה">העתקה</button></td></tr>
-          <tr><td>עפולה</td><td>עמק סנטר פרנדלי</td><td>שדרות יצחק רבין 18, עפולה</td><td><button class="copy-btn" data-text="עפולה - עמק סנטר פרנדלי - שדרות יצחק רבין 18, עפולה">העתקה</button></td></tr>
-          <tr><td>נתניה</td><td>קניון השרון</td><td>הרצל 60, נתניה</td><td><button class="copy-btn" data-text="נתניה - קניון השרון - הרצל 60, נתניה">העתקה</button></td></tr>
-          <tr><td>נתניה</td><td>עיר ימים</td><td>בני ברמן 2, נתניה</td><td><button class="copy-btn" data-text="נתניה - עיר ימים - בני ברמן 2, נתניה">העתקה</button></td></tr>
-          <tr><td>נתיבות</td><td>מתחם פריז</td><td>מתחם פריז, נתיבות</td><td><button class="copy-btn" data-text="נתיבות - מתחם פריז - מתחם פריז, נתיבות">העתקה</button></td></tr>
-          <tr><td>נס ציונה</td><td>קניותר</td><td>האירוסים 53, נס ציונה</td><td><button class="copy-btn" data-text="נס ציונה - קניותר - האירוסים 53, נס ציונה">העתקה</button></td></tr>
-          <tr><td>מצפה רמון</td><td>–</td><td>שדרות בן גוריון 2, מצפה רמון</td><td><button class="copy-btn" data-text="מצפה רמון - – - שדרות בן גוריון 2, מצפה רמון">העתקה</button></td></tr>
-          <tr><td>מעלה אדומים</td><td>–</td><td>דרך קדם 5, מעלה אדומים</td><td><button class="copy-btn" data-text="מעלה אדומים - – - דרך קדם 5, מעלה אדומים">העתקה</button></td></tr>
-          <tr><td>מודיעין</td><td>עזריאלי</td><td>לב העיר 2, מודיעין</td><td><button class="copy-btn" data-text="מודיעין - עזריאלי - לב העיר 2, מודיעין">העתקה</button></td></tr>
-          <tr><td>כרמי גת</td><td>–</td><td>אבני חושן 1, קריית גת</td><td><button class="copy-btn" data-text="כרמי גת - – - אבני חושן 1, קריית גת">העתקה</button></td></tr>
-          <tr><td>ירושלים</td><td>הרובע היהודי</td><td>תפארת ישראל 8, ירושלים</td><td><button class="copy-btn" data-text="ירושלים - הרובע היהודי - תפארת ישראל 8, ירושלים">העתקה</button></td></tr>
-          <tr><td>ירושלים</td><td>קניון מלחה</td><td>אגודת ספורט בית"ר 1, ירושלים</td><td><button class="copy-btn" data-text="ירושלים - קניון מלחה - אגודת ספורט בית'ר 1, ירושלים">העתקה</button></td></tr>
-          <tr><td>ירושלים</td><td>קניון הדר</td><td>גנרל פייר קניג 26, ירושלים</td><td><button class="copy-btn" data-text="ירושלים - קניון הדר - גנרל פייר קניג 26, ירושלים">העתקה</button></td></tr>
-          <tr><td>יקנעם</td><td>ביג</td><td>שדרות יצחק רבין 9, יקנעם</td><td><button class="copy-btn" data-text="יקנעם - ביג - שדרות יצחק רבין 9, יקנעם">העתקה</button></td></tr>
-          <tr><td>טבריה</td><td>ביג פוריה</td><td>המברג 1, טבריה</td><td><button class="copy-btn" data-text="טבריה - ביג פוריה - המברג 1, טבריה">העתקה</button></td></tr>
-          <tr><td>טבריה</td><td>ביג פאשן</td><td>יהודה הלוי 9990, טבריה</td><td><button class="copy-btn" data-text="טבריה - ביג פאשן - יהודה הלוי 9990, טבריה">העתקה</button></td></tr>
-          <tr><td>חיפה</td><td>רמב"ם</td><td>העלייה השנייה 8, חיפה</td><td><button class="copy-btn" data-text="חיפה - רמב'ם - העלייה השנייה 8, חיפה">העתקה</button></td></tr>
-          <tr><td>חולון</td><td>עזריאלי</td><td>גולדה מאיר 7, חולון</td><td><button class="copy-btn" data-text="חולון - עזריאלי - גולדה מאיר 7, חולון">העתקה</button></td></tr>
-          <tr><td>חדרה</td><td>קניון לב חדרה</td><td>רוטשילד 40, חדרה</td><td><button class="copy-btn" data-text="חדרה - קניון לב חדרה - רוטשילד 40, חדרה">העתקה</button></td></tr>
-          <tr><td>דימונה</td><td>מתחם פרץ</td><td>מתחם פרץ, דימונה</td><td><button class="copy-btn" data-text="דימונה - מתחם פרץ - מתחם פרץ, דימונה">העתקה</button></td></tr>
-          <tr><td>גני תקווה</td><td>–</td><td>ההדרים 7, גני תקווה</td><td><button class="copy-btn" data-text="גני תקווה - – - ההדרים 7, גני תקווה">העתקה</button></td></tr>
-          <tr><td>גבעת שמואל</td><td>רוגובין</td><td>שדרות מנחם בגין 38, גבעת שמואל</td><td><button class="copy-btn" data-text="גבעת שמואל - רוגובין - שדרות מנחם בגין 38, גבעת שמואל">העתקה</button></td></tr>
-          <tr><td>בית משמש</td><td>ביג פאשן</td><td>יגאל אלון 1, בית משמש</td><td><button class="copy-btn" data-text="בית משמש - ביג פאשן - יגאל אלון 1, בית משמש">העתקה</button></td></tr>
-          <tr><td>בית שאן</td><td>צים סנטר</td><td>צים סנטר, בית שאן</td><td><button class="copy-btn" data-text="בית שאן - צים סנטר - צים סנטר, בית שאן">העתקה</button></td></tr>
-          <tr><td>באר שבע</td><td>תחנה מרכזית</td><td>תחנה אגד באר שבע, באר שבע</td><td><button class="copy-btn" data-text="באר שבע - תחנה מרכזית - תחנה אגד באר שבע, באר שבע">העתקה</button></td></tr>
-          <tr><td>באר שבע</td><td>קניון הנגב</td><td>שדרות יצחק רגר 2, באר שבע</td><td><button class="copy-btn" data-text="באר שבע - קניון הנגב - שדרות יצחק רגר 2, באר שבע">העתקה</button></td></tr>
-          <tr><td>באר שבע</td><td>גרנד קניון</td><td>שדרות דוד טוביהו 125, באר שבע</td><td><button class="copy-btn" data-text="באר שבע - גרנד קניון - שדרות דוד טוביהו 125, באר שבע">העתקה</button></td></tr>
-          <tr><td>באר שבע</td><td>ביג</td><td>חיל ההנדסה 6, באר שבע</td><td><button class="copy-btn" data-text="באר שבע - ביג - חיל ההנדסה 6, באר שבע">העתקה</button></td></tr>
-          <tr><td>אשקלון</td><td>מרינה</td><td>הנמל 9, אשקלון</td><td><button class="copy-btn" data-text="אשקלון - מרינה - הנמל 9, אשקלון">העתקה</button></td></tr>
-        </tbody>
-      </table>
-    </details>
-  </div>
+    <div class="header">
+        <h1>מערכת שירות לקוחות</h1>
+    </div>
 
-  <div class="container">
-    <h1>תגובות שירות לקוחות</h1>
-    <input id="resp-search" class="search" placeholder="🔍 חפש תגובה..." oninput="filterResponses()"/>
-    <div id="categories"></div>
-  </div>
+    <div class="dark-mode-toggle">
+        <span id="darkModeStatus" class="status-text">מצב כהה: כבוי</span>
+        <label class="switch">
+            <input type="checkbox" id="darkModeSwitch">
+            <span class="slider"></span>
+        </label>
+    </div>
 
-  <script>
-    // העתקת טקסט מכל כפתורי 'העתקה'
-    document.addEventListener('click', e => {
-      if (e.target.classList.contains('copy-btn')) {
-        const btn = e.target;
-        navigator.clipboard.writeText(btn.dataset.text).then(() => {
-          const orig = btn.textContent;
-          btn.textContent = 'הועתק!';
-          setTimeout(() => btn.textContent = orig, 1000);
-        });
-      }
-    });
+    <div class="categories" id="categoryContainer">
+        <!-- כאן תכניס קטגוריות -->
+    </div>
 
-    // חיפוש בטבלת סניפים
-    function filterBranches() {
-      const q = document.getElementById('branch-search').value.trim().toLowerCase();
-      document.querySelectorAll('.branch-table tbody tr').forEach(row => {
-        row.style.display = row.innerText.toLowerCase().includes(q) ? '' : 'none';
-      });
-    }
+    <div class="search-container">
+        <input type="text" id="searchInput" class="search-box" placeholder="חפש תגובה...">
+    </div>
 
-    // נתוני תגובות שירות לקוחות
-    const categoriesData = {
-      "תלונה על משקה": [
+    <div id="responses">
+        <!-- כאן תכניס תגובות -->
+    </div>
+
+    <script>
+        const data = {
+"תלונה על משקה": [
         `היי, מתנצלת על החוויה שלך. אני אשמח לתמונה של המשקאות על מנת שאוכל להעביר לבירור מול הסניף🙏`,
         `כמחווה שירותית, אוכל להציע לך 50% הנחה על המשקה הבא. להבא, בכל הנוגע למשקאות יש לפנות ישירות לסניף\nתודה על ההבנה 🙏`,
         `במידה והמשקה לא לטעמך, ניתן לפנות לברמן ולבקש תיקון – הם יבצעו זאת בשמחה, אלו נהלי הרשת.\nתודה על ההבנה 🙏`,
@@ -274,46 +277,106 @@
       ],
       "אלרגיות": [
         `חשוב להדגיש כי במערך העבודה שלנו, על אף שאנחנו מקפידים על הפרדת רכיבים, כל המשקאות מוכנים על אותו פס, ולכן עלולים להיות שאריות של אלרגנים שונים, לרבות חלב ומוצריו. לצערנו, לא ניתן להבטיח סטריליות מוחלטת מאלרגנים בסניפים שלנו. כפי שמצוין בתפריט שלנו ובאפליקציה, אנו ממליצים ללקוחות עם רגישויות או אלרגיות לבדוק מראש את רשימת המרכיבים וליידע את הצוות בסניף כדי שנוכל לסייע בצורה מיטבית 🙏`
-      ]
-    };
+      ],
+	  "זכיינות": [ 'היי, בנושאי זכיינות יש לפנות לערן במייל eran@rebar.co.il🙏'
+		],
+		"כשרות מהדרין": [ 'סניפים בכשרות מהדרין:\nבית שמש\nירושלים - הרובע היהודי\nירושלים – מלחה\n	כרמי גת'
+		]
+	  };
 
-    // יצירת כרטיסי תגובות
-    function render() {
-      const root = document.getElementById('categories');
-      root.innerHTML = '';
-      Object.entries(categoriesData).forEach(([cat, arr]) => {
-        const sec = document.createElement('div');
-        sec.className = 'category';
-        sec.innerHTML = `<h2>${cat}</h2><div class="grid"></div>`;
-        arr.forEach(txt => {
-          const card = document.createElement('div');
-          card.className = 'card';
-          card.innerHTML = `
-            <button class="copy-btn" data-text="${txt.replace(/"/g,'&quot;')}">העתק</button>
-            <p>${txt.replace(/\n/g,'<br/>')}</p>`;
-          sec.querySelector('.grid').appendChild(card);
+        const categoryContainer = document.getElementById('categoryContainer');
+        const responsesContainer = document.getElementById('responses');
+
+        function renderCategories() {
+            categoryContainer.innerHTML = '<div class="category active" data-category="all">הכל</div>';
+            Object.keys(data).forEach(cat => {
+                const div = document.createElement('div');
+                div.className = 'category';
+                div.setAttribute('data-category', cat);
+                div.textContent = cat;
+                categoryContainer.appendChild(div);
+            });
+
+            document.querySelectorAll('.category').forEach(cat => {
+                cat.addEventListener('click', () => {
+                    document.querySelectorAll('.category').forEach(c => c.classList.remove('active'));
+                    cat.classList.add('active');
+                    filterResponses(cat.getAttribute('data-category'));
+                });
+            });
+        }
+
+        function renderResponses() {
+            responsesContainer.innerHTML = '';
+            Object.entries(data).forEach(([category, messages]) => {
+                messages.forEach(msg => {
+                    const responseDiv = document.createElement('div');
+                    responseDiv.className = 'response';
+                    responseDiv.setAttribute('data-category', category);
+                    responseDiv.innerHTML = `
+                        <div class="response-text">${msg.replace(/\n/g, '<br>')}</div>
+                        <button class="copy-btn">העתק</button>
+                    `;
+                    responsesContainer.appendChild(responseDiv);
+                });
+            });
+        }
+
+        function filterResponses(category) {
+            document.querySelectorAll('.response').forEach(resp => {
+                if (category === 'all' || resp.getAttribute('data-category') === category) {
+                    resp.style.display = 'flex';
+                } else {
+                    resp.style.display = 'none';
+                }
+            });
+        }
+
+        document.getElementById('searchInput').addEventListener('input', function() {
+            const query = this.value.trim();
+            const regex = new RegExp(`(${query})`, 'gi');
+            document.querySelectorAll('.response').forEach(resp => {
+                const textContainer = resp.querySelector('.response-text');
+                const original = textContainer.textContent;
+                if (query === '') {
+                    textContainer.innerHTML = original;
+                    resp.style.display = 'flex';
+                    return;
+                }
+                if (original.toLowerCase().includes(query.toLowerCase())) {
+                    textContainer.innerHTML = original.replace(regex, '<span class="highlight">$1</span>');
+                    resp.style.display = 'flex';
+                } else {
+                    resp.style.display = 'none';
+                }
+            });
         });
-        root.appendChild(sec);
-      });
-    }
 
-    // סינון תגובות לפי חיפוש
-    function filterResponses() {
-      const q = document.getElementById('resp-search').value.trim().toLowerCase();
-      document.querySelectorAll('.card').forEach(c => {
-        const ok = c.querySelector('p').innerText.toLowerCase().includes(q);
-        c.style.display = ok ? '' : 'none';
-      });
-      document.querySelectorAll('.category').forEach(cat => {
-        const any = cat.querySelector('.card:not([style*="display: none"])');
-        cat.style.display = any ? '' : 'none';
-      });
-    }
+        document.addEventListener('click', (e) => {
+            if (e.target.classList.contains('copy-btn')) {
+                const btn = e.target;
+                const text = btn.previousElementSibling.textContent.trim();
+                navigator.clipboard.writeText(text).then(() => {
+                    btn.classList.add('copied');
+                    btn.textContent = 'הועתק';
+                    setTimeout(() => {
+                        btn.classList.remove('copied');
+                        btn.textContent = 'העתק';
+                    }, 1000);
+                });
+            }
+        });
 
-    window.onload = () => {
-      render();
-    };
-  </script>
+        document.getElementById('darkModeSwitch').addEventListener('change', (e) => {
+            document.body.classList.toggle('dark-mode', e.target.checked);
+            document.getElementById('darkModeStatus').textContent = e.target.checked ? 'מצב כהה: פעיל' : 'מצב כהה: כבוי';
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            renderCategories();
+            renderResponses();
+        });
+    </script>
+
 </body>
 </html>
-```
